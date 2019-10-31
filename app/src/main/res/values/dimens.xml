@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_outer_login">32dp</dimen>
+    <dimen name="app_margin">16dp</dimen>
+    <dimen name="text_size">12sp</dimen>
+    <dimen name="margin_top_sign_up">40dp</dimen>
+</resources>
