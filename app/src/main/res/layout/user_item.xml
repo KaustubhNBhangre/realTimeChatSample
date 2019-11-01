@@ -17,6 +17,7 @@
         android:layout_marginTop="@dimen/app_half_margin"
         android:layout_marginBottom="@dimen/app_half_margin"
         android:contentDescription="@string/user"
+        tools:srcCompat="@drawable/ic_user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +31,7 @@
         style="@style/user_text"
         android:textSize="@dimen/user_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toStartOf="$+id/user_image"
+
         app:layout_constraintStart_toEndOf="@+id/user_image"
         app:layout_constraintTop_toTopOf="parent" />
 

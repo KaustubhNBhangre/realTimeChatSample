@@ -13,13 +13,12 @@
         android:layout_marginStart="@dimen/app_margin"
         android:layout_marginLeft="@dimen/app_margin"
         android:layout_marginTop="@dimen/app_half_margin"
-        android:layout_marginEnd="@dimen/app_margin"
-        android:layout_marginRight="@dimen/app_margin"
         android:layout_marginBottom="@dimen/app_half_margin"
         android:contentDescription="@string/user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_user" />
 
     <TextView
         android:id="@+id/name"
@@ -32,7 +31,6 @@
         android:layout_marginEnd="@dimen/app_margin"
         android:layout_marginRight="@dimen/app_margin"
         android:textSize="@dimen/user_text_size"
-        app:layout_constraintLeft_toStartOf="$+id/user_image"
         app:layout_constraintStart_toEndOf="@+id/user_image"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/first_name" />

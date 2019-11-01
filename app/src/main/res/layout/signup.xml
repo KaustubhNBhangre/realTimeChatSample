@@ -1,127 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/textFirstName"
-        style="@style/user_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_outer_login"
-        android:layout_marginLeft="@dimen/margin_outer_login"
-        android:layout_marginEnd="@dimen/app_margin"
-        android:layout_marginRight="@dimen/app_margin"
-        android:text="@string/first_name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/firstName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <EditText
-        android:id="@+id/firstName"
-        style="@style/edit_user"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/app_margin"
-        android:layout_marginLeft="@dimen/app_margin"
-        android:layout_marginEnd="@dimen/margin_outer_login"
-        android:layout_marginRight="@dimen/margin_outer_login"
-        android:ems="10"
-        android:hint="@string/first_name"
-        android:importantForAutofill="no"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textFirstName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textFirstName" />
+    </data>
 
-    <TextView
-        android:id="@+id/textLastName"
-        style="@style/user_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_outer_login"
-        android:layout_marginLeft="@dimen/margin_outer_login"
-        android:layout_marginTop="@dimen/margin_top_sign_up"
-        android:layout_marginEnd="@dimen/app_margin"
-        android:layout_marginRight="@dimen/app_margin"
-        android:text="@string/last_name"
-        app:layout_constraintEnd_toStartOf="@+id/lastName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFirstName" />
-
-    <EditText
-        android:id="@+id/lastName"
-        style="@style/edit_user"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/app_margin"
-        android:layout_marginLeft="@dimen/app_margin"
-        android:layout_marginEnd="@dimen/margin_outer_login"
-        android:layout_marginRight="@dimen/margin_outer_login"
-        android:ems="10"
-        android:hint="@string/last_name"
-        android:importantForAutofill="no"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textLastName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textLastName" />
-
-    <TextView
-        android:id="@+id/textUserName"
-        style="@style/user_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_outer_login"
-        android:layout_marginLeft="@dimen/margin_outer_login"
-        android:layout_marginTop="@dimen/margin_top_sign_up"
-        android:layout_marginEnd="@dimen/app_margin"
-        android:layout_marginRight="@dimen/app_margin"
-        android:text="@string/username"
-        app:layout_constraintEnd_toStartOf="@+id/userName"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLastName" />
-
-    <EditText
-        android:id="@+id/userName"
-        style="@style/edit_user"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/app_margin"
-        android:layout_marginLeft="@dimen/app_margin"
-        android:layout_marginEnd="@dimen/margin_outer_login"
-        android:layout_marginRight="@dimen/margin_outer_login"
-        android:ems="10"
-        android:hint="@string/username"
-        android:importantForAutofill="no"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textUserName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textUserName" />
-
-    <Button
-        android:id="@+id/signUp"
-        style="@style/Widget.AppCompat.Button.Colored"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/app_margin"
-        android:layout_marginLeft="@dimen/app_margin"
-        android:layout_marginTop="@dimen/margin_outer_login"
-        android:layout_marginEnd="@dimen/app_margin"
-        android:layout_marginRight="@dimen/app_margin"
-        android:fontFamily="@font/roboto"
-        android:text="@string/sign_up"
-        android:textColor="@android:color/white"
-        android:theme="@style/cerulean.button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/textFirstName"
+            style="@style/user_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_outer_login"
+            android:layout_marginLeft="@dimen/margin_outer_login"
+            android:layout_marginEnd="@dimen/app_margin"
+            android:layout_marginRight="@dimen/app_margin"
+            android:text="@string/first_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/firstName"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/firstName"
+            style="@style/edit_user"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/app_margin"
+            android:layout_marginLeft="@dimen/app_margin"
+            android:layout_marginEnd="@dimen/margin_outer_login"
+            android:layout_marginRight="@dimen/margin_outer_login"
+            android:ems="10"
+            android:hint="@string/first_name"
+            android:importantForAutofill="no"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textFirstName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textFirstName" />
+
+        <TextView
+            android:id="@+id/textLastName"
+            style="@style/user_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_outer_login"
+            android:layout_marginLeft="@dimen/margin_outer_login"
+            android:layout_marginTop="@dimen/margin_top_sign_up"
+            android:layout_marginEnd="@dimen/app_margin"
+            android:layout_marginRight="@dimen/app_margin"
+            android:text="@string/last_name"
+            app:layout_constraintEnd_toStartOf="@+id/lastName"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textFirstName" />
+
+        <EditText
+            android:id="@+id/lastName"
+            style="@style/edit_user"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/app_margin"
+            android:layout_marginLeft="@dimen/app_margin"
+            android:layout_marginEnd="@dimen/margin_outer_login"
+            android:layout_marginRight="@dimen/margin_outer_login"
+            android:ems="10"
+            android:hint="@string/last_name"
+            android:importantForAutofill="no"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textLastName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textLastName" />
+
+        <TextView
+            android:id="@+id/textUserName"
+            style="@style/user_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_outer_login"
+            android:layout_marginLeft="@dimen/margin_outer_login"
+            android:layout_marginTop="@dimen/margin_top_sign_up"
+            android:layout_marginEnd="@dimen/app_margin"
+            android:layout_marginRight="@dimen/app_margin"
+            android:text="@string/username"
+            app:layout_constraintEnd_toStartOf="@+id/userName"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textLastName" />
+
+        <EditText
+            android:id="@+id/userName"
+            style="@style/edit_user"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/app_margin"
+            android:layout_marginLeft="@dimen/app_margin"
+            android:layout_marginEnd="@dimen/margin_outer_login"
+            android:layout_marginRight="@dimen/margin_outer_login"
+            android:ems="10"
+            android:hint="@string/username"
+            android:importantForAutofill="no"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textUserName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textUserName" />
+
+        <Button
+            android:id="@+id/signUp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/app_margin"
+            android:layout_marginLeft="@dimen/app_margin"
+            android:layout_marginTop="@dimen/margin_outer_login"
+            android:layout_marginEnd="@dimen/app_margin"
+            android:layout_marginRight="@dimen/app_margin"
+            android:fontFamily="@font/roboto"
+            android:text="@string/sign_up"
+            android:textColor="@android:color/white"
+            android:theme="@style/cerulean.button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userName" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

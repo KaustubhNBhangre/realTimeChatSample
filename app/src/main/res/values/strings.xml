@@ -14,4 +14,7 @@
     <string name="placeholder_message">This is a very big message so big it might spill and spoil the layout</string>
     <string name="chat_placeholder">First Last Name</string>
     <string name="date_placeholder">1 November 2019</string>
+    <string name="message_hint">Please enter a message</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
 </resources>
