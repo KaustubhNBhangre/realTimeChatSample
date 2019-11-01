@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/textUserName"
+        style="@style/user_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_outer_login"
@@ -19,11 +20,11 @@
         app:layout_constraintEnd_toStartOf="@+id/userName"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/user_text" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/userName"
+        style="@style/edit_user"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/app_margin"
@@ -31,16 +32,16 @@
         android:layout_marginEnd="@dimen/margin_outer_login"
         android:layout_marginRight="@dimen/margin_outer_login"
         android:ems="10"
-        android:importantForAutofill="no"
         android:hint="@string/username_hint"
+        android:importantForAutofill="no"
         app:layout_constraintBaseline_toBaselineOf="@+id/textUserName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textUserName"
-        style="@style/edit_user" />
+        app:layout_constraintStart_toEndOf="@+id/textUserName" />
 
     <Button
         android:id="@+id/login"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/app_margin"
@@ -48,11 +49,10 @@
         android:layout_marginTop="@dimen/app_margin"
         android:layout_marginEnd="@dimen/app_margin"
         android:layout_marginRight="@dimen/app_margin"
-        android:text="@string/login"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:theme="@style/cerulean.button"
-        android:textColor="@android:color/white"
         android:fontFamily="@font/roboto"
+        android:text="@string/login"
+        android:textColor="@android:color/white"
+        android:theme="@style/cerulean.button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userName" />
@@ -66,9 +66,9 @@
         android:layout_marginTop="@dimen/app_margin"
         android:layout_marginEnd="@dimen/app_margin"
         android:layout_marginRight="@dimen/app_margin"
+        android:fontFamily="@font/roboto"
         android:text="@string/sign_up"
         android:textColor="@android:color/black"
-        android:fontFamily="@font/roboto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login" />

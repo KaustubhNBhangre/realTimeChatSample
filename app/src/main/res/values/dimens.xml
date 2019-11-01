@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="margin_outer_login">32dp</dimen>
-    <dimen name="app_margin">16dp</dimen>
+
+    <!--Text Size-->
     <dimen name="text_size">12sp</dimen>
+    <dimen name="user_text_size">16sp</dimen>
+    <dimen name="time_text_size">18sp</dimen>
+    <dimen name="chat_text_size">14sp</dimen>
+
+    <!--    Margin-->
+    <dimen name="app_half_margin">8dp</dimen>
+    <dimen name="app_margin">16dp</dimen>
+    <dimen name="margin_outer_login">32dp</dimen>
     <dimen name="margin_top_sign_up">40dp</dimen>
+
+    <!--    Icon Size-->
+    <dimen name="icon_size">64dp</dimen>
+    <dimen name="badge_size">32dp</dimen>
+
 </resources>
