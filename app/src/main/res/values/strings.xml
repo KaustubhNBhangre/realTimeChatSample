@@ -12,4 +12,6 @@
     <string name="placeholder_time">10.30 AM</string>
     <string name="placeholder_badge">100</string>
     <string name="placeholder_message">This is a very big message so big it might spill and spoil the layout</string>
+    <string name="chat_placeholder">First Last Name</string>
+    <string name="date_placeholder">1 November 2019</string>
 </resources>

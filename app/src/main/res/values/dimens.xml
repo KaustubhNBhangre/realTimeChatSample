@@ -16,5 +16,7 @@
     <!--    Icon Size-->
     <dimen name="icon_size">64dp</dimen>
     <dimen name="badge_size">32dp</dimen>
+    <dimen name="padding_app">16dp</dimen>
+    <dimen name="padding_half_app">8dp</dimen>
 
 </resources>
