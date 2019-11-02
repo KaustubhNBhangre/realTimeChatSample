@@ -6,11 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.snackbar.Snackbar
+import com.tatvum.realtimechat.EMPTY
+import com.tatvum.realtimechat.NO_USER
 import com.tatvum.realtimechat.R
 import com.tatvum.realtimechat.databinding.LoginBinding
 
 class LoginFragment : Fragment() {
+
+    private lateinit var viewModel: LoginViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -21,16 +29,46 @@ class LoginFragment : Fragment() {
             inflater,
             R.layout.login, container, false
         )
+        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
-        binding.login.setOnClickListener { view: View ->
-            view.findNavController()
-                .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
-        }
+//        viewModel.eventLoginFinish.observe(this, Observer<Boolean> {
+//            signIn()
+//        })
 
-        binding.signUp.setOnClickListener { view: View ->
-            view.findNavController()
-                .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
-        }
+        viewModel.eventValidationComplete.observe(this, Observer { errorType ->
+            val message: String = getErrorMessage(errorType)
+            if (message != "") {
+                Snackbar.make(binding.parent, message, Snackbar.LENGTH_SHORT).show();
+            }
+        })
+
+//        binding.signUp.setOnClickListener {signIn()}
+//        binding.login.setOnClickListener { signUp()}
+
         return binding.root
+
+    }
+
+    private fun getErrorMessage(errorType: Int?): String {
+        return when (errorType) {
+            EMPTY -> getString(R.string.valid_username)
+            NO_USER -> getString(R.string.valid_user_not_found)
+            else -> ""
+        }
+
+    }
+
+    private fun signIn() {
+        NavHostFragment.findNavController(this)
+            .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
+        NavHostFragment.findNavController(this)
+            .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+    }
+
+    private fun signUp() {
+        NavHostFragment.findNavController(this)
+            .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
     }
 }

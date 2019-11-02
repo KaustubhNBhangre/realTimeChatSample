@@ -1,20 +1,36 @@
 <resources>
     <string name="app_name">Realtime Chat</string>
-    <string name="username">UserName</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="username_hint">Please enter your username</string>
-    <string name="first_name_hint">Please enter your First name</string>
-    <string name="last_name_hint">Please enter your Last name</string>
-    <string name="login">Login</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="user">user</string>
+
+    <!--Place Holders-->
     <string name="placeholder_time">10.30 AM</string>
     <string name="placeholder_badge">100</string>
     <string name="placeholder_message">This is a very big message so big it might spill and spoil the layout</string>
     <string name="chat_placeholder">First Last Name</string>
     <string name="date_placeholder">1 November 2019</string>
-    <string name="message_hint">Please enter a message</string>
+
+    <!--TextViews-->
+    <string name="username">UserName</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+
+    <!--Buttons-->
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
+
+    <!--Hints-->
+    <string name="username_hint">Please enter a Username</string>
+    <string name="message_hint">Please enter a message</string>
+
+    <!-- Validation Message-->
+    <string name="valid_username">Please enter a Username.</string>
+    <string name="valid_user_not_found">User not found.</string>
+    <string name="valid_first_name">Please enter a First name.</string>
+    <string name="valid_last_name">Please enter a Last name.</string>
+
+    <!--Content Description-->
+    <string name="user">user</string>
+
+
 </resources>
