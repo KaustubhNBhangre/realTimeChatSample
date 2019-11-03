@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.tatvum.realtimechat.EMPTY_USER
 import com.tatvum.realtimechat.NO_USER
 import com.tatvum.realtimechat.model.user.UserModel
-import com.tatvum.realtimechat.model.user.interfaces.CheckUserListener
+import com.tatvum.realtimechat.model.user.listeners.CheckUser
 
-class LoginViewModel : ViewModel(), CheckUserListener {
+class LoginViewModel : ViewModel(), CheckUser {
 
     val userName = MutableLiveData<String>()
     private val userModel = UserModel()

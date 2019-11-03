@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.tatvum.realtimechat.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,6 +37,7 @@
             android:layout_marginBottom="@dimen/margin_outer_login"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{()->viewModel.navToChat()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@android:drawable/ic_dialog_email" />

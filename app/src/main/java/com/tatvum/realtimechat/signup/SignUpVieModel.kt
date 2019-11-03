@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tatvum.realtimechat.*
-import com.tatvum.realtimechat.model.user.User
 import com.tatvum.realtimechat.model.user.UserModel
-import com.tatvum.realtimechat.model.user.interfaces.AddUserListener
-import com.tatvum.realtimechat.model.user.interfaces.CheckUserListener
+import com.tatvum.realtimechat.model.user.listeners.AddUser
+import com.tatvum.realtimechat.model.user.listeners.CheckUser
 
-class SignUpVieModel : ViewModel(), CheckUserListener, AddUserListener {
+class SignUpVieModel : ViewModel(), CheckUser, AddUser {
     val userName = MutableLiveData<String>()
     val firstName = MutableLiveData<String>()
     val lastName = MutableLiveData<String>()
@@ -44,14 +43,11 @@ class SignUpVieModel : ViewModel(), CheckUserListener, AddUserListener {
         firstNameText = firstName.value ?: ""
         lastNameText = lastName.value ?: ""
 
-        if (firstNameText.trim() == "") {
-            validationError(EMPTY_FIRST_NAME)
-        } else if (lastNameText.trim().equals("")) {
-            validationError(EMPTY_LAST_NAME)
-        } else if (userNameText.trim() == "") {
-            validationError(EMPTY_USER)
-        } else {
-            userModel.checkUser(userNameText, this)
+        when {
+            firstNameText.trim() == "" -> validationError(EMPTY_FIRST_NAME)
+            lastNameText.trim() == "" -> validationError(EMPTY_LAST_NAME)
+            userNameText.trim() == "" -> validationError(EMPTY_USER)
+            else -> userModel.checkUser(userNameText, this)
         }
     }
 
@@ -81,9 +77,9 @@ class SignUpVieModel : ViewModel(), CheckUserListener, AddUserListener {
     }
 
     override fun userAdded(status: Boolean) {
-        if(status){
+        if (status) {
             navToLogin()
-        }else{
+        } else {
             validationError(USER_CREATION_FAILED)
         }
 

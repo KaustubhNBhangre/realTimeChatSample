@@ -18,6 +18,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
+    <string name="refresh">Refresh</string>
 
     <!--Hints-->
     <string name="username_hint">Please enter a Username</string>
@@ -30,6 +31,7 @@
     <string name="valid_first_name">Please enter a First name.</string>
     <string name="valid_last_name">Please enter a Last name.</string>
     <string name="valid_user_creation">Unable to create this user.</string>
+    <string name="valid_no_user_list">There are no users the list.</string>
 
 
     <!--Content Description-->

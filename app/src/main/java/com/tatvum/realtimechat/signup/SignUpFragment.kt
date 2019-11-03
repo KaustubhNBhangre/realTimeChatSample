@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.tatvum.realtimechat.*
 import com.tatvum.realtimechat.databinding.SignupBinding
@@ -75,8 +74,8 @@ class SignUpFragment : Fragment() {
     }
 
     private fun logIn() {
-        NavHostFragment.findNavController(this).navigate(SignUpFragmentDirections.actionSignUpFragmentToLoginFragment())
-
+        NavHostFragment.findNavController(this)
+            .navigate(SignUpFragmentDirections.actionSignUpFragmentToLoginFragment())
         viewModel.navLoginComplete()
     }
 }
