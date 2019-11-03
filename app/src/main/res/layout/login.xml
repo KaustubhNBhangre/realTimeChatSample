@@ -9,12 +9,16 @@
             name="viewModel"
             type="com.tatvum.realtimechat.login.LoginViewModel" />
     </data>
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".MainActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:layout_height="wrap_content"
+        >
 
         <TextView
             android:id="@+id/textUserName"
@@ -86,4 +90,5 @@
             app:layout_constraintTop_toBottomOf="@+id/login" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 </layout>

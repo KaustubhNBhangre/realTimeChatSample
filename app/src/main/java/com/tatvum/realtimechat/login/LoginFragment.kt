@@ -14,10 +14,13 @@ import com.tatvum.realtimechat.EMPTY
 import com.tatvum.realtimechat.NO_USER
 import com.tatvum.realtimechat.R
 import com.tatvum.realtimechat.databinding.LoginBinding
+import java.util.*
 
 class LoginFragment : Fragment() {
 
     private lateinit var viewModel: LoginViewModel
+    private lateinit var binding: LoginBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,7 +28,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = DataBindingUtil.inflate<LoginBinding>(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.login, container, false
         )
@@ -33,22 +36,32 @@ class LoginFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-//        viewModel.eventLoginFinish.observe(this, Observer<Boolean> {
-//            signIn()
-//        })
-
         viewModel.eventValidationComplete.observe(this, Observer { errorType ->
             val message: String = getErrorMessage(errorType)
-            if (message != "") {
-                Snackbar.make(binding.parent, message, Snackbar.LENGTH_SHORT).show();
+
+            if (errorType != 0) {
+                if (errorType == EMPTY) {
+                    Snackbar.make(binding.parent, message, Snackbar.LENGTH_SHORT).show()
+
+                } else if (errorType == NO_USER) {
+                    val snackBar = Snackbar.make(binding.parent, message, Snackbar.LENGTH_SHORT)
+                    snackBar.setAction(getString(R.string.sign_up).toUpperCase(Locale.US)) {
+                        signUp()
+                    }
+                    snackBar.show()
+                }
+                viewModel.validationComplete()
             }
         })
 
-//        binding.signUp.setOnClickListener {signIn()}
-//        binding.login.setOnClickListener { signUp()}
+        viewModel.eventNavigateFromLogin.observe(this, Observer { moveFromLogin ->
+            if (moveFromLogin) signIn()
+        })
 
+        viewModel.eventMoveToSignUp.observe(this, Observer { moveToSignUp ->
+            if (moveToSignUp) signUp()
+        })
         return binding.root
-
     }
 
     private fun getErrorMessage(errorType: Int?): String {
@@ -57,18 +70,17 @@ class LoginFragment : Fragment() {
             NO_USER -> getString(R.string.valid_user_not_found)
             else -> ""
         }
-
     }
 
     private fun signIn() {
         NavHostFragment.findNavController(this)
-            .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
-        NavHostFragment.findNavController(this)
             .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+        viewModel.loginFinish()
     }
 
     private fun signUp() {
         NavHostFragment.findNavController(this)
             .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
+        binding.userName.setText("")
     }
 }

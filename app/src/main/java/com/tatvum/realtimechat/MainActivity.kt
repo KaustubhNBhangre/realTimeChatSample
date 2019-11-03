@@ -6,6 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.tatvum.realtimechat.databinding.ActivityMainBinding
+import com.google.firebase.firestore.FirebaseFirestore
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.tatvum.realtimechat.model.Model
+
 
 class MainActivity : AppCompatActivity() {
 
