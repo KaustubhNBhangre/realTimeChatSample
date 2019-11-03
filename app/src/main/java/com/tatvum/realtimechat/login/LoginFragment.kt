@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
-import com.tatvum.realtimechat.EMPTY
+import com.tatvum.realtimechat.EMPTY_USER
 import com.tatvum.realtimechat.NO_USER
 import com.tatvum.realtimechat.R
 import com.tatvum.realtimechat.databinding.LoginBinding
@@ -36,29 +36,25 @@ class LoginFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.eventValidationComplete.observe(this, Observer { errorType ->
-            val message: String = getErrorMessage(errorType)
+        viewModel.eventValComplete.observe(this, Observer { errorType ->
 
             if (errorType != 0) {
-                if (errorType == EMPTY) {
-                    Snackbar.make(binding.parent, message, Snackbar.LENGTH_SHORT).show()
-
-                } else if (errorType == NO_USER) {
-                    val snackBar = Snackbar.make(binding.parent, message, Snackbar.LENGTH_SHORT)
-                    snackBar.setAction(getString(R.string.sign_up).toUpperCase(Locale.US)) {
-                        signUp()
+                val sb = Snackbar.make(binding.parent, getErrorMessage(errorType), Snackbar.LENGTH_SHORT)
+                if (errorType == NO_USER) {
+                    sb.setAction(getString(R.string.sign_up).toUpperCase(Locale.US)) {
+                        viewModel.navToSignUp()
                     }
-                    snackBar.show()
                 }
+                sb.show()
                 viewModel.validationComplete()
             }
         })
 
-        viewModel.eventNavigateFromLogin.observe(this, Observer { moveFromLogin ->
+        viewModel.eventNavToHome.observe(this, Observer { moveFromLogin ->
             if (moveFromLogin) signIn()
         })
 
-        viewModel.eventMoveToSignUp.observe(this, Observer { moveToSignUp ->
+        viewModel.eventNavToSignUp.observe(this, Observer { moveToSignUp ->
             if (moveToSignUp) signUp()
         })
         return binding.root
@@ -66,7 +62,7 @@ class LoginFragment : Fragment() {
 
     private fun getErrorMessage(errorType: Int?): String {
         return when (errorType) {
-            EMPTY -> getString(R.string.valid_username)
+            EMPTY_USER -> getString(R.string.valid_username)
             NO_USER -> getString(R.string.valid_user_not_found)
             else -> ""
         }
@@ -82,5 +78,6 @@ class LoginFragment : Fragment() {
         NavHostFragment.findNavController(this)
             .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
         binding.userName.setText("")
+        viewModel.navSignUpComplete()
     }
 }

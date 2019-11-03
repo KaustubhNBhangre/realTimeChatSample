@@ -35,12 +35,21 @@ class UserModel {
     }
 
     fun addUser(
-        userName: String,
         firstName: String,
         lastName: String,
+        userName: String,
         addUserListener: AddUserListener
     ) {
-        checkUser(userName, UserCheck(userName, firstName, lastName, database, addUserListener))
+        val user = User(userName, firstName, lastName, "", null)
+        database.collection(USER_COLLECTION).add(user)
+            .addOnSuccessListener { documentReference ->
+                Timber.i("DocumentSnapshot written with ID: ${documentReference.id}")
+                addUserListener.userAdded(true)
+            }
+            .addOnFailureListener { exception ->
+                Timber.i(exception.toString())
+                addUserListener.userAdded(false)
+            }
     }
 
 
@@ -58,27 +67,5 @@ class UserModel {
                 Timber.i(exception.toString())
             }
         return userList
-    }
-}
-class UserCheck constructor(
-    private val userName: String,
-    private val firstName: String,
-    private val lastName: String,
-    private val database: FirebaseFirestore,
-    private val addUserListener: AddUserListener
-) : CheckUserListener {
-    override fun userFound(status: Boolean) {
-        if (status) {
-            addUserListener.userAdded(User())
-        } else {
-            val user = User(userName, firstName, lastName, "", null)
-            database.collection(USER_COLLECTION).add(user)
-                .addOnSuccessListener { documentReference ->
-                    Timber.i("DocumentSnapshot written with ID: ${documentReference.id}")
-                }
-                .addOnFailureListener { exception ->
-                    Timber.i(exception.toString())
-                }
-        }
     }
 }

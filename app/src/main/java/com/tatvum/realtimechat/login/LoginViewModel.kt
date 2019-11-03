@@ -3,7 +3,7 @@ package com.tatvum.realtimechat.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tatvum.realtimechat.EMPTY
+import com.tatvum.realtimechat.EMPTY_USER
 import com.tatvum.realtimechat.NO_USER
 import com.tatvum.realtimechat.model.user.UserModel
 import com.tatvum.realtimechat.model.user.interfaces.CheckUserListener
@@ -13,52 +13,51 @@ class LoginViewModel : ViewModel(), CheckUserListener {
     val userName = MutableLiveData<String>()
     private val userModel = UserModel()
 
-    private val _eventNavigateFromLogin = MutableLiveData<Boolean>()
-    val eventNavigateFromLogin: LiveData<Boolean>
-        get() = _eventNavigateFromLogin
+    private val _eventNavToHome = MutableLiveData<Boolean>()
+    val eventNavToHome: LiveData<Boolean>
+        get() = _eventNavToHome
 
-    private val _eventValidationComplete = MutableLiveData<Int>()
-    val eventValidationComplete: LiveData<Int>
-        get() = _eventValidationComplete
+    private val _eventValComplete = MutableLiveData<Int>()
+    val eventValComplete: LiveData<Int>
+        get() = _eventValComplete
 
-    private val _eventMoveToSignUp = MutableLiveData<Boolean>()
-    val eventMoveToSignUp: LiveData<Boolean>
-        get() = _eventMoveToSignUp
+    private val _eventNavToSignUp = MutableLiveData<Boolean>()
+    val eventNavToSignUp: LiveData<Boolean>
+        get() = _eventNavToSignUp
 
 
     init {
         userName.value = ""
-        _eventValidationComplete.value = 0
-        _eventNavigateFromLogin.value = false
-        _eventMoveToSignUp.value = false
+        _eventValComplete.value = 0
+        _eventNavToHome.value = false
+        _eventNavToSignUp.value = false
     }
 
     fun loginFinish() {
-        _eventNavigateFromLogin.value = false
+        _eventNavToHome.value = false
     }
 
-    private fun navigateFromLogin() {
-        _eventNavigateFromLogin.value = true
+    private fun navTtoHome() {
+        _eventNavToHome.value = true
+    }
+
+
+    //Validations
+    fun validateLogin() {
+        val enteredText = userName.value ?: ""
+        if (enteredText.trim() == "") {
+            validationError(EMPTY_USER)
+        } else {
+            userModel.checkUser(enteredText, this)
+        }
     }
 
     private fun validationError(no: Int) {
-        _eventValidationComplete.value = no
+        _eventValComplete.value = no
     }
 
     fun validationComplete() {
-        _eventValidationComplete.value = 0
-    }
-
-
-    fun validateLogin() {
-        val enteredText = userName.value
-        if (enteredText != null) {
-            if (enteredText == "") {
-                validationError(EMPTY)
-            } else {
-                userModel.checkUser(enteredText, this)
-            }
-        }
+        _eventValComplete.value = 0
     }
 
     override fun userFound(status: Boolean) {
@@ -66,12 +65,16 @@ class LoginViewModel : ViewModel(), CheckUserListener {
             validationError(NO_USER)
         } else {
             validationComplete()
-            navigateFromLogin()
+            navTtoHome()
         }
     }
 
-    fun navigateToSignUp() {
-        _eventMoveToSignUp.value = true
+    fun navToSignUp() {
+        _eventNavToSignUp.value = true
+    }
+
+    fun navSignUpComplete() {
+        _eventNavToSignUp.value = false
     }
 
 }

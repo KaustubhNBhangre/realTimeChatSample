@@ -12,7 +12,6 @@ class RealTimeApplication : Application() {
         MultiDex.install(this)
     }
 
-
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())

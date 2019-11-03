@@ -26,11 +26,14 @@
     <!-- Validation Message-->
     <string name="valid_username">Please enter a Username.</string>
     <string name="valid_user_not_found">User not found.</string>
+    <string name="valid_user_exist">Username already exists.</string>
     <string name="valid_first_name">Please enter a First name.</string>
     <string name="valid_last_name">Please enter a Last name.</string>
+    <string name="valid_user_creation">Unable to create this user.</string>
+
 
     <!--Content Description-->
     <string name="user">user</string>
 
-
+    <string name="user_created">User created Successfully.</string>
 </resources>
