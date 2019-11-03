@@ -39,7 +39,8 @@ class LoginFragment : Fragment() {
         viewModel.eventValComplete.observe(this, Observer { errorType ->
 
             if (errorType != 0) {
-                val sb = Snackbar.make(binding.parent, getErrorMessage(errorType), Snackbar.LENGTH_SHORT)
+                val sb =
+                    Snackbar.make(binding.parent, getErrorMessage(errorType), Snackbar.LENGTH_SHORT)
                 if (errorType == NO_USER) {
                     sb.setAction(getString(R.string.sign_up).toUpperCase(Locale.US)) {
                         viewModel.navToSignUp()
@@ -69,8 +70,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun signIn() {
+        val userName = viewModel.userName.value
+
         NavHostFragment.findNavController(this)
-            .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+            .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment(userName.toString()))
         viewModel.loginFinish()
     }
 

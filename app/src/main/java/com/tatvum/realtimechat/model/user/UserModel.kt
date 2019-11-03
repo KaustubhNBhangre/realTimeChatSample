@@ -5,6 +5,7 @@ import com.tatvum.realtimechat.model.Model
 import com.tatvum.realtimechat.model.user.listeners.AddUser
 import com.tatvum.realtimechat.model.user.listeners.CheckUser
 import com.tatvum.realtimechat.model.user.listeners.GetAllUsers
+import com.tatvum.realtimechat.model.user.listeners.GetUser
 import timber.log.Timber
 
 
@@ -70,4 +71,23 @@ class UserModel {
                 getAllUsers.getUsers(null)
             }
     }
+
+    fun getUser(userName: String, getUser: GetUser) {
+        val userList = mutableListOf<User>()
+        database.collection("users")
+            .whereEqualTo(USER_NAME_FIELD, userName)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val user: User = document.toObject(User::class.java)
+                    userList.add(user)
+                }
+                getUser.getUser(userList[0])
+            }
+            .addOnFailureListener { exception ->
+                Timber.i(exception.toString())
+                getUser.getUser(null)
+            }
+    }
+
 }

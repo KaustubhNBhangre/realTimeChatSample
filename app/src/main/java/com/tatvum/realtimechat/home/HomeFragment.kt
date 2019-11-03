@@ -1,5 +1,6 @@
 package com.tatvum.realtimechat.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
@@ -15,7 +16,6 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: HomeBinding
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,21 +30,19 @@ class HomeFragment : Fragment() {
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        
+
+        val userName = HomeFragmentArgs.fromBundle(arguments!!).userName
+
+        val sharedPrefs =
+            activity?.getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+        viewModel.sharedPrefs=sharedPrefs!!
+        viewModel.saveUser(userName)
         viewModel.eventNavToChat.observe(this, Observer { navToChat ->
             if (navToChat) {
                 chat()
             }
         })
-
-//        binding.chatUserList.setOnClickListener { view: View ->
-//            view.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUserFragment())
-//            val snackBar: Snackbar = Snackbar.make(binding.parent, "Message", Snackbar.LENGTH_SHORT)
-//            snackBar.show();
-//        }
         setHasOptionsMenu(true)
-
-
         return binding.root
     }
 

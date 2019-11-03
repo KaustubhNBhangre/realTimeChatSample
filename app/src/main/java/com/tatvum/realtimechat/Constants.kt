@@ -6,4 +6,6 @@ const val EMPTY_FIRST_NAME =3
 const val EMPTY_LAST_NAME =4
 const val EXIST_USER =5
 const val USER_CREATION_FAILED =6
-const val EMPTY_USER_LIST =7
+
+
+const val PREF_NAME = "user_object"
