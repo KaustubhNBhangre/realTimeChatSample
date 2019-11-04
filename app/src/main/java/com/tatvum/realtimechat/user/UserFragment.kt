@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.tatvum.realtimechat.PREF_NAME
 import com.tatvum.realtimechat.R
 import com.tatvum.realtimechat.databinding.UserListBinding
 
@@ -36,9 +37,9 @@ class UserFragment : Fragment() {
         val adapter = UserAdapter()
         binding.userList.adapter = adapter
 
-        val sharedPrefs =
-            activity?.getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
-        viewModel.sharedPrefs = sharedPrefs!!
+        val sharedPrefs = activity?.getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+        val currentUser = sharedPrefs!!.getString(PREF_NAME, "") ?: ""
+        viewModel.currentUser = currentUser
 
         viewModel.userItemList.observe(this, Observer { userItemList ->
             if (userItemList != null) {

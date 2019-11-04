@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
+import com.tatvum.realtimechat.PREF_NAME
 import com.tatvum.realtimechat.R
 import com.tatvum.realtimechat.databinding.HomeBinding
 
@@ -31,12 +32,10 @@ class HomeFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        val userName = HomeFragmentArgs.fromBundle(arguments!!).userName
+        val sPrefs = activity?.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val currentUser = sPrefs!!.getString(PREF_NAME, "") ?: ""
 
-        val sharedPrefs =
-            activity?.getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
-        viewModel.sharedPrefs=sharedPrefs!!
-        viewModel.saveUser(userName)
+        viewModel.saveUser(currentUser)
         viewModel.eventNavToChat.observe(this, Observer { navToChat ->
             if (navToChat) {
                 chat()
@@ -56,7 +55,7 @@ class HomeFragment : Fragment() {
     }
 
 
-    fun chat() {
+    private fun chat() {
         NavHostFragment.findNavController(this)
             .navigate(HomeFragmentDirections.actionHomeFragmentToUserFragment())
         viewModel.navChatComplete()

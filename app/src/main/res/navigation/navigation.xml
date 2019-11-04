@@ -44,9 +44,6 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@+id/loginFragment"
             app:popUpToInclusive="false" />
-        <argument
-            android:name="userName"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/userFragment"
@@ -54,14 +51,21 @@
         android:label="UserFragment"
         tools:layout="@layout/user_list">
         <action
-            android:id="@+id/action_userFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@+id/homeFragment"
-            app:popUpToInclusive="false" />
+            android:id="@+id/action_userFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.tatvum.realtimechat.chat.ChatFragment"
         android:label="ChatFragment"
-        tools:layout="@layout/chat"/>
+        tools:layout="@layout/chat">
+        <action
+            android:id="@+id/action_chatFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="userName"
+            app:argType="string" />
+    </fragment>
 </navigation>

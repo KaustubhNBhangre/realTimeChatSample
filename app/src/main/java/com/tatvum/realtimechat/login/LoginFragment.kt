@@ -1,5 +1,6 @@
 package com.tatvum.realtimechat.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
-import com.tatvum.realtimechat.EMPTY_USER
-import com.tatvum.realtimechat.NO_USER
-import com.tatvum.realtimechat.R
+import com.tatvum.realtimechat.*
 import com.tatvum.realtimechat.databinding.LoginBinding
 import java.util.*
 
@@ -35,6 +34,9 @@ class LoginFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        val sPrefs = activity?.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        viewModel.sharedPrefs = sPrefs!!
 
         viewModel.eventValComplete.observe(this, Observer { errorType ->
 
@@ -73,8 +75,9 @@ class LoginFragment : Fragment() {
         val userName = viewModel.userName.value
 
         NavHostFragment.findNavController(this)
-            .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment(userName.toString()))
-        viewModel.loginFinish()
+            .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+        viewModel.navHomeComplete()
+        this.hideKeyboard()
     }
 
     private fun signUp() {
@@ -82,5 +85,6 @@ class LoginFragment : Fragment() {
             .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
         binding.userName.setText("")
         viewModel.navSignUpComplete()
+        this.hideKeyboard()
     }
 }

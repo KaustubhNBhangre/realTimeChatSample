@@ -77,5 +77,6 @@ class SignUpFragment : Fragment() {
         NavHostFragment.findNavController(this)
             .navigate(SignUpFragmentDirections.actionSignUpFragmentToLoginFragment())
         viewModel.navLoginComplete()
+        this.hideKeyboard()
     }
 }

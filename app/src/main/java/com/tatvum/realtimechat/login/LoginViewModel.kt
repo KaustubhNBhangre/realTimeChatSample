@@ -1,10 +1,12 @@
 package com.tatvum.realtimechat.login
 
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tatvum.realtimechat.EMPTY_USER
 import com.tatvum.realtimechat.NO_USER
+import com.tatvum.realtimechat.PREF_NAME
 import com.tatvum.realtimechat.model.user.UserModel
 import com.tatvum.realtimechat.model.user.listeners.CheckUser
 
@@ -12,6 +14,7 @@ class LoginViewModel : ViewModel(), CheckUser {
 
     val userName = MutableLiveData<String>()
     private val userModel = UserModel()
+    lateinit var sharedPrefs: SharedPreferences
 
     private val _eventNavToHome = MutableLiveData<Boolean>()
     val eventNavToHome: LiveData<Boolean>
@@ -33,8 +36,12 @@ class LoginViewModel : ViewModel(), CheckUser {
         _eventNavToSignUp.value = false
     }
 
-    fun loginFinish() {
+    fun navHomeComplete() {
         _eventNavToHome.value = false
+        with(sharedPrefs.edit()) {
+            putString(PREF_NAME, userName.value)
+            commit()
+        }
     }
 
     private fun navTtoHome() {
