@@ -18,5 +18,6 @@
     <dimen name="badge_size">32dp</dimen>
     <dimen name="padding_app">16dp</dimen>
     <dimen name="padding_half_app">8dp</dimen>
+    <dimen name="message_text">15sp</dimen>
 
 </resources>

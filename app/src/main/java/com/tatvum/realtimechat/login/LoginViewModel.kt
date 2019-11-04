@@ -28,7 +28,6 @@ class LoginViewModel : ViewModel(), CheckUser {
     val eventNavToSignUp: LiveData<Boolean>
         get() = _eventNavToSignUp
 
-
     init {
         userName.value = ""
         _eventValComplete.value = 0
@@ -47,7 +46,6 @@ class LoginViewModel : ViewModel(), CheckUser {
     private fun navTtoHome() {
         _eventNavToHome.value = true
     }
-
 
     //Validations
     fun validateLogin() {

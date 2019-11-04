@@ -1,16 +1,16 @@
 package com.tatvum.realtimechat.model.user
 
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tatvum.realtimechat.model.Model
-import com.tatvum.realtimechat.model.user.listeners.AddUser
-import com.tatvum.realtimechat.model.user.listeners.CheckUser
-import com.tatvum.realtimechat.model.user.listeners.GetAllUsers
-import com.tatvum.realtimechat.model.user.listeners.GetUser
+import com.tatvum.realtimechat.model.user.listeners.*
 import timber.log.Timber
 
 
 const val USER_COLLECTION: String = "users"
 const val USER_NAME_FIELD = "userName"
+const val USERS_FIELD = "users"
+
 
 class UserModel {
     private var database: FirebaseFirestore = Model.getInstance()
@@ -31,27 +31,17 @@ class UserModel {
                     checkUserListen.userFound(false)
                 }
             }
-            .addOnFailureListener {
-                checkUserListen.userFound(false)
-            }
+            .addOnFailureListener { checkUserListen.userFound(false) }
     }
 
-    fun addUser(
-        firstName: String,
-        lastName: String,
-        userName: String,
-        addUser: AddUser
-    ) {
+    fun addUser(firstName: String, lastName: String, userName: String, addUser: AddUser) {
         val user = User(userName, firstName, lastName, "", null)
         database.collection(USER_COLLECTION).add(user)
             .addOnSuccessListener { documentReference ->
                 Timber.i("DocumentSnapshot written with ID: ${documentReference.id}")
                 addUser.userAdded(true)
             }
-            .addOnFailureListener { exception ->
-                Timber.i(exception.toString())
-                addUser.userAdded(false)
-            }
+            .addOnFailureListener { addUser.userAdded(false) }
     }
 
 
@@ -66,10 +56,7 @@ class UserModel {
                 }
                 getAllUsers.getUsers(userList)
             }
-            .addOnFailureListener { exception ->
-                Timber.i(exception.toString())
-                getAllUsers.getUsers(null)
-            }
+            .addOnFailureListener { getAllUsers.getUsers(null) }
     }
 
     fun getUser(userName: String, getUser: GetUser) {
@@ -78,16 +65,47 @@ class UserModel {
             .whereEqualTo(USER_NAME_FIELD, userName)
             .get()
             .addOnSuccessListener { documents ->
+                var id = ""
                 for (document in documents) {
                     val user: User = document.toObject(User::class.java)
                     userList.add(user)
+                    id = document.id
+                    break
                 }
-                getUser.getUser(userList[0])
+                getUser.getUser(userList[0], id)
             }
-            .addOnFailureListener { exception ->
-                Timber.i(exception.toString())
-                getUser.getUser(null)
-            }
+            .addOnFailureListener { getUser.getUser(null, "") }
     }
 
+    fun updateUser(username: String, toValue: String, updateUser: UpdateUser) {
+        getUser(username, GetUserForUpdate(toValue, updateUser))
+    }
+
+    inner class GetUserForUpdate(
+        val toValue: String,
+        val updateUser: UpdateUser
+    ) : GetUser {
+        override fun getUser(user: User?, id: String) {
+            if (user != null) {
+                val userList = user.users
+                val userRef = database.collection(USER_COLLECTION).document(id)
+                if (userList == null) {
+                    val tempList = listOf(toValue)
+                    userRef.update(USERS_FIELD, tempList)
+                        .addOnSuccessListener {
+                            updateUser.userUpdated(true)
+                        }
+                        .addOnFailureListener {
+                            updateUser.userUpdated(false)
+                        }
+                } else {
+                    if (!userList.contains(toValue)) {
+                        userRef.update(USERS_FIELD, FieldValue.arrayUnion(toValue))
+                            .addOnSuccessListener { updateUser.userUpdated(true) }
+                            .addOnFailureListener { updateUser.userUpdated(false) }
+                    }
+                }
+            }
+        }
+    }
 }

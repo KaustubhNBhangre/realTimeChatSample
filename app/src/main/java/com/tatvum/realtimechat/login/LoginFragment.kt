@@ -26,7 +26,6 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.login, container, false
@@ -72,8 +71,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun signIn() {
-        val userName = viewModel.userName.value
-
         NavHostFragment.findNavController(this)
             .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
         viewModel.navHomeComplete()

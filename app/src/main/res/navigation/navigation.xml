@@ -52,7 +52,9 @@
         tools:layout="@layout/user_list">
         <action
             android:id="@+id/action_userFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"

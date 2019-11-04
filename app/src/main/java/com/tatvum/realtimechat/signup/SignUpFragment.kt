@@ -25,11 +25,11 @@ class SignUpFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.signup, container, false
         )
+
         viewModel = ViewModelProviders.of(this).get(SignUpVieModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -37,7 +37,7 @@ class SignUpFragment : Fragment() {
         viewModel.eventValComplete.observe(this, Observer { errorType ->
             if (errorType != 0) {
                 Snackbar.make(
-                    binding.signUpParent,
+                    binding.parent,
                     getErrorMessage(errorType),
                     Snackbar.LENGTH_SHORT
                 ).show()
@@ -48,7 +48,7 @@ class SignUpFragment : Fragment() {
         viewModel.eventNavToLogin.observe(this, Observer { navToLogin ->
             if (navToLogin) {
                 Snackbar.make(
-                    binding.signUpParent,
+                    binding.parent,
                     getString(R.string.user_created),
                     Snackbar.LENGTH_SHORT
                 )

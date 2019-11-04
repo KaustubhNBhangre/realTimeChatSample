@@ -11,10 +11,12 @@ import androidx.navigation.fragment.NavHostFragment
 import com.tatvum.realtimechat.PREF_NAME
 import com.tatvum.realtimechat.R
 import com.tatvum.realtimechat.databinding.HomeBinding
+import com.tatvum.realtimechat.hideKeyboard
 
 class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModelFactory: HomeViewModelFactory
     private lateinit var binding: HomeBinding
 
     override fun onCreateView(
@@ -22,25 +24,41 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.home, container, false
         )
-        viewModel =
-            ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
 
         val sPrefs = activity?.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val currentUser = sPrefs!!.getString(PREF_NAME, "") ?: ""
 
-        viewModel.saveUser(currentUser)
-        viewModel.eventNavToChat.observe(this, Observer { navToChat ->
-            if (navToChat) {
-                chat()
+        viewModelFactory = HomeViewModelFactory(currentUser)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
+        val adapter = HomeAdapter(HomeItemListener { userName ->
+            chat(userName)
+        })
+
+
+
+
+
+        viewModel.eventNavToUserList.observe(this, Observer { navToUserList ->
+            if (navToUserList) {
+                userList()
             }
         })
+
+        binding.chatUserList.adapter = adapter
+        viewModel.homeItemList.observe(this, Observer { homeItemList ->
+            if (homeItemList != null) {
+                adapter.submitList(homeItemList)
+            }
+        })
+
+
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -50,14 +68,16 @@ class HomeFragment : Fragment() {
         inflater.inflate(R.menu.options_menu, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
+    private fun chat(userName: String) {
+        NavHostFragment.findNavController(this)
+            .navigate(HomeFragmentDirections.actionHomeFragmentToChatFragment(userName))
+        this.hideKeyboard()
     }
 
-
-    private fun chat() {
+    private fun userList() {
         NavHostFragment.findNavController(this)
             .navigate(HomeFragmentDirections.actionHomeFragmentToUserFragment())
-        viewModel.navChatComplete()
+        viewModel.navUserListComplete()
+        this.hideKeyboard()
     }
 }

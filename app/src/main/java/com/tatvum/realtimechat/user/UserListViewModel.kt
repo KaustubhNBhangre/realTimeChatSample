@@ -10,7 +10,7 @@ import com.tatvum.realtimechat.model.user.listeners.GetAllUsers
 class UserListViewModel : ViewModel(), GetAllUsers {
     private val userModel = UserModel()
 
-    var currentUser: String=""
+    var currentUser: String = ""
     private val _userItemList = MutableLiveData<MutableList<UserListItem>>()
     val userItemList: LiveData<MutableList<UserListItem>>
         get() = _userItemList
@@ -19,7 +19,6 @@ class UserListViewModel : ViewModel(), GetAllUsers {
     init {
         _userItemList.value = null
     }
-
 
     fun getUsers() {
         userModel.getUserList(this)
@@ -35,4 +34,5 @@ class UserListViewModel : ViewModel(), GetAllUsers {
             _userItemList.value = userItemList
         }
     }
+
 }

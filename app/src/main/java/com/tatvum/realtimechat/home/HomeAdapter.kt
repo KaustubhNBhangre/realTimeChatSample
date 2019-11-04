@@ -1,40 +1,40 @@
-package com.tatvum.realtimechat.user
+package com.tatvum.realtimechat.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.tatvum.realtimechat.databinding.UserItemBinding
+import com.tatvum.realtimechat.databinding.ChatItemBinding
 
-class UserAdapter(val clickListener: UserItemListener) :
-    ListAdapter<UserListItem, UserAdapter.ViewHolder>(UserDiffCallback()) {
+class HomeAdapter(val clickListener: HomeItemListener) :
+    ListAdapter<HomeListItem, HomeAdapter.ViewHolder>(UserDiffCallback()) {
 
-    class UserDiffCallback : DiffUtil.ItemCallback<UserListItem>() {
-        override fun areContentsTheSame(oldItem: UserListItem, newItem: UserListItem): Boolean {
+    class UserDiffCallback : DiffUtil.ItemCallback<HomeListItem>() {
+        override fun areContentsTheSame(oldItem: HomeListItem, newItem: HomeListItem): Boolean {
             return oldItem.userName == newItem.userName
         }
 
-        override fun areItemsTheSame(oldItem: UserListItem, newItem: UserListItem): Boolean {
+        override fun areItemsTheSame(oldItem: HomeListItem, newItem: HomeListItem): Boolean {
             return oldItem == newItem
         }
 
     }
 
-    class ViewHolder private constructor(val binding: UserItemBinding) :
+    class ViewHolder private constructor(val binding: ChatItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            item: UserListItem,
-            clickListener: UserItemListener
+            item: HomeListItem,
+            clickListener: HomeItemListener
         ) {
-            binding.user = item
+            binding.home = item
             binding.clickListener = clickListener
         }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = UserItemBinding.inflate(layoutInflater, parent, false)
+                val binding = ChatItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
@@ -50,6 +50,6 @@ class UserAdapter(val clickListener: UserItemListener) :
     }
 }
 
-class UserItemListener(val clickListener: (userName: String) -> Unit) {
-    fun onClick(userListItem: UserListItem) = clickListener(userListItem.userName)
+class HomeItemListener(val clickListener: (userName: String) -> Unit) {
+    fun onClick(HomeListItem: HomeListItem) = clickListener(HomeListItem.userName)
 }
