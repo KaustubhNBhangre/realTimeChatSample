@@ -59,6 +59,21 @@ class UserModel {
             .addOnFailureListener { getAllUsers.getUsers(null) }
     }
 
+    fun observeUser(userName: String, realTimeUser: RealTimeUser) {
+        database.collection("users")
+            .whereEqualTo(USER_NAME_FIELD, userName)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    realTimeUser.userUpdated(false)
+                } else {
+                    if (snapshot != null) {
+                        realTimeUser.userUpdated(true)
+                    }
+                }
+            }
+    }
+
+
     fun getUser(userName: String, getUser: GetUser) {
         val userList = mutableListOf<User>()
         database.collection("users")
@@ -82,8 +97,8 @@ class UserModel {
     }
 
     inner class GetUserForUpdate(
-        val toValue: String,
-        val updateUser: UpdateUser
+        private val toValue: String,
+        private val updateUser: UpdateUser
     ) : GetUser {
         override fun getUser(user: User?, id: String) {
             if (user != null) {

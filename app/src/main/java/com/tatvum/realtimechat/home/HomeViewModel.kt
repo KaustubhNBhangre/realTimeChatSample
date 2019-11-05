@@ -6,11 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.tatvum.realtimechat.model.message.Message
 import com.tatvum.realtimechat.model.message.MessageModel
 import com.tatvum.realtimechat.model.message.listeners.GetMessage
+import com.tatvum.realtimechat.model.message.listeners.RealtimeMessage
 import com.tatvum.realtimechat.model.user.User
 import com.tatvum.realtimechat.model.user.UserModel
 import com.tatvum.realtimechat.model.user.listeners.GetUser
+import com.tatvum.realtimechat.model.user.listeners.RealTimeUser
 
-class HomeViewModel(private val userName: String) : ViewModel(), GetUser {
+class HomeViewModel(private val userName: String) : ViewModel(), GetUser, RealTimeUser,
+    RealtimeMessage {
     private val userModel = UserModel()
     private val messageModel = MessageModel()
 
@@ -28,6 +31,7 @@ class HomeViewModel(private val userName: String) : ViewModel(), GetUser {
         _homeItemList.value = null
         _eventNavToUserList.value = false
         updateList()
+        observeUser()
     }
 
 
@@ -41,6 +45,16 @@ class HomeViewModel(private val userName: String) : ViewModel(), GetUser {
 
     private fun updateList() {
         userModel.getUser(userName, this)
+    }
+
+    fun observeUser() {
+        userModel.observeUser(userName, this)
+    }
+
+    override fun userUpdated(userUpdated: Boolean) {
+        if (userUpdated) {
+//            updateList()
+        }
     }
 
     override fun getUser(user: User?, id: String) {
@@ -76,6 +90,7 @@ class HomeViewModel(private val userName: String) : ViewModel(), GetUser {
                             homeItems[i].userName,
                             CompleteHomeListItem(i, true, from)
                         )
+
                     } else {
                         messageModel.getLastMessage(
                             from,
@@ -103,7 +118,10 @@ class HomeViewModel(private val userName: String) : ViewModel(), GetUser {
                     val tempArray = homeItems[index].displayName.split(" ")
                     tempArray[0] + ": "
                 }
-
+                messageModel.observeMessageTable(
+                    message.from.toString(),
+                    message.to.toString(), this@HomeViewModel
+                )
                 msgLine += message.message
 //                val date = message.timeStamp?.toDate()
                 homeItems[index].messageLine = msgLine
@@ -114,5 +132,9 @@ class HomeViewModel(private val userName: String) : ViewModel(), GetUser {
         }
     }
 
-
+    override fun messageUpdated(userUpdated: Boolean) {
+        if (userUpdated) {
+//            updateList()
+        }
+    }
 }

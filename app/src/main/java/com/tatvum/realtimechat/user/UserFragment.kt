@@ -31,15 +31,13 @@ class UserFragment : Fragment() {
             R.layout.user_list, container, false
         )
 
-        val sharedPrefs =
-            activity?.getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+        val sharedPrefs = activity?.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val currentUser = sharedPrefs!!.getString(PREF_NAME, "") ?: ""
 
         viewModelFactory = UserViewModelFactory(currentUser)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(UserViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-
 
         val adapter = UserAdapter(UserItemListener { userName ->
             chat(userName)
@@ -51,8 +49,6 @@ class UserFragment : Fragment() {
                 adapter.submitList(userItemList)
             }
         })
-
-
 
         viewModel.getUsers()
         return binding.root

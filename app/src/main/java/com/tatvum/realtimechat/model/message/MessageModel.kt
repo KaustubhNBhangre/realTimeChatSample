@@ -1,19 +1,24 @@
 package com.tatvum.realtimechat.model.message
 
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.tatvum.realtimechat.model.Model
 import com.tatvum.realtimechat.model.message.listeners.AddMessage
 import com.tatvum.realtimechat.model.message.listeners.GetAllMessages
 import com.tatvum.realtimechat.model.message.listeners.GetMessage
+import com.tatvum.realtimechat.model.message.listeners.RealtimeMessage
 import timber.log.Timber
 
 const val TIME_STAMP_FIELD = "timeStamp"
-const val QUERY_LIMIT:Long = 100
+const val QUERY_LIMIT: Long = 100
 
 class MessageModel {
     private var database: FirebaseFirestore = Model.getInstance()
+
+    private lateinit var regListener:ListenerRegistration;
     private fun createMessage(
         from: String,
         to: String,
@@ -68,13 +73,36 @@ class MessageModel {
                 } else {
                     if (snapshot != null) {
                         for (documentChange in snapshot.documentChanges) {
-                            val message: Message = documentChange.document.toObject(Message::class.java)
+                            val message: Message =
+                                documentChange.document.toObject(Message::class.java)
                             messageList.add(message)
                         }
                         getAllMessages.getMessages(messageList)
                     }
                 }
             }
+    }
+
+    fun observeMessageTable(from: String, to: String, realtimeMessage: RealtimeMessage) {
+        val collectionName = getCollectionName(from, to)
+        val query =
+            database.collection(collectionName).orderBy(TIME_STAMP_FIELD, Query.Direction.ASCENDING)
+        regListener = query.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                realtimeMessage.messageUpdated(false)
+            } else {
+                if (snapshot != null) {
+                    for (documentChange in snapshot.documentChanges) {
+                        if (documentChange.type == DocumentChange.Type.ADDED)
+                            realtimeMessage.messageUpdated(true)
+                    }
+                }
+            }
+        }
+    }
+
+    fun removeRegListener(){
+       regListener.remove()
     }
 
     fun getLastMessage(from: String, to: String, getMessage: GetMessage) {
