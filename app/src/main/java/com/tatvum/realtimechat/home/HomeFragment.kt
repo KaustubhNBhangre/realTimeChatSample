@@ -42,9 +42,6 @@ class HomeFragment : Fragment() {
         })
 
 
-
-
-
         viewModel.eventNavToUserList.observe(this, Observer { navToUserList ->
             if (navToUserList) {
                 userList()

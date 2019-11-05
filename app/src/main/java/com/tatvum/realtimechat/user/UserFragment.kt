@@ -18,7 +18,8 @@ import com.tatvum.realtimechat.hideKeyboard
 class UserFragment : Fragment() {
 
     private lateinit var binding: UserListBinding
-    private lateinit var viewModel: UserListViewModel
+    private lateinit var viewModel: UserViewModel
+    private lateinit var viewModelFactory: UserViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,19 +31,19 @@ class UserFragment : Fragment() {
             R.layout.user_list, container, false
         )
 
-        viewModel = ViewModelProviders.of(this).get(UserListViewModel::class.java)
+        val sharedPrefs =
+            activity?.getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+        val currentUser = sharedPrefs!!.getString(PREF_NAME, "") ?: ""
+
+        viewModelFactory = UserViewModelFactory(currentUser)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(UserViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
 
         val adapter = UserAdapter(UserItemListener { userName ->
             chat(userName)
         })
-
-        val sharedPrefs =
-            activity?.getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
-        val currentUser = sharedPrefs!!.getString(PREF_NAME, "") ?: ""
-        viewModel.currentUser = currentUser
-
 
         binding.userList.adapter = adapter
         viewModel.userItemList.observe(this, Observer { userItemList ->
@@ -50,6 +51,8 @@ class UserFragment : Fragment() {
                 adapter.submitList(userItemList)
             }
         })
+
+
 
         viewModel.getUsers()
         return binding.root

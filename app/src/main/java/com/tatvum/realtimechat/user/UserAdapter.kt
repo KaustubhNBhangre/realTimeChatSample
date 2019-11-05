@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tatvum.realtimechat.databinding.UserItemBinding
 
-class UserAdapter(val clickListener: UserItemListener) :
+class UserAdapter(private val clickListener: UserItemListener) :
     ListAdapter<UserListItem, UserAdapter.ViewHolder>(UserDiffCallback()) {
 
     class UserDiffCallback : DiffUtil.ItemCallback<UserListItem>() {

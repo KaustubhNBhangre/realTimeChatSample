@@ -103,6 +103,8 @@ class UserModel {
                         userRef.update(USERS_FIELD, FieldValue.arrayUnion(toValue))
                             .addOnSuccessListener { updateUser.userUpdated(true) }
                             .addOnFailureListener { updateUser.userUpdated(false) }
+                    } else {
+                        updateUser.userUpdated(true)
                     }
                 }
             }

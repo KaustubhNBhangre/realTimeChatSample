@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.tatvum.realtimechat.model.Model
 import com.tatvum.realtimechat.model.message.listeners.AddMessage
+import com.tatvum.realtimechat.model.message.listeners.GetAllMessages
 import com.tatvum.realtimechat.model.message.listeners.GetMessage
 import timber.log.Timber
 
@@ -41,8 +42,22 @@ class MessageModel {
             }
     }
 
-    fun getLastMessage(from: String, to: String, getMessage: GetMessage) {
+    fun getMessageList(from: String, to: String, getAllMessages: GetAllMessages) {
+        val messageList = mutableListOf<Message>()
+        val collectionName = getCollectionName(from, to)
+        database.collection(collectionName).orderBy(TIME_STAMP_FIELD, Query.Direction.ASCENDING)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val message: Message = document.toObject(Message::class.java)
+                    messageList.add(message)
+                }
+                getAllMessages.getMessages(messageList)
+            }
+            .addOnFailureListener { getAllMessages.getMessages(null) }
+    }
 
+    fun getLastMessage(from: String, to: String, getMessage: GetMessage) {
         var message: Message? = null
         val collectionName = getCollectionName(from, to)
         database.collection(collectionName).orderBy(TIME_STAMP_FIELD, Query.Direction.DESCENDING)
@@ -51,7 +66,7 @@ class MessageModel {
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     message = document.toObject(Message::class.java)
-                    break;
+                    break
                 }
                 getMessage.getMessage(message)
             }

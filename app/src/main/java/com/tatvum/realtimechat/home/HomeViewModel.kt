@@ -40,7 +40,7 @@ class HomeViewModel(private val userName: String) : ViewModel(), GetUser {
         _eventNavToUserList.value = false
     }
 
-    fun updateList() {
+    private fun updateList() {
         userModel.getUser(userName, this)
     }
 

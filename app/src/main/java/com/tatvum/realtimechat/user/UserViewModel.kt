@@ -7,10 +7,10 @@ import com.tatvum.realtimechat.model.user.User
 import com.tatvum.realtimechat.model.user.UserModel
 import com.tatvum.realtimechat.model.user.listeners.GetAllUsers
 
-class UserListViewModel : ViewModel(), GetAllUsers {
+class UserViewModel(private val currentUser: String) : ViewModel(), GetAllUsers {
     private val userModel = UserModel()
 
-    var currentUser: String = ""
+
     private val _userItemList = MutableLiveData<MutableList<UserListItem>>()
     val userItemList: LiveData<MutableList<UserListItem>>
         get() = _userItemList
