@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tatvum.realtimechat.PREF_NAME
 import com.tatvum.realtimechat.R
@@ -43,7 +42,6 @@ class ChatFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.chat.adapter = adapter
-//        binding.chat.smoothScrollToPosition(adapter.itemCount - 1)
 
         viewModel.chatList.observe(this, Observer { chatList ->
             if (chatList != null) {
@@ -59,31 +57,12 @@ class ChatFragment : Fragment() {
             }
         })
 
-        val linearLayoutManager = LinearLayoutManager(activity)
-        binding.chat.layoutManager = linearLayoutManager
-
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-//            override fun onChanged() {
-//                binding.chat.scrollToPosition(adapter.itemCount - 1)
-//            }
-
-            //            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-//                recycler_view_list.scrollToPosition(0)
-//            }
-//            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
-//                recycler_view_list.scrollToPosition(0)
-//            }
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 binding.chat.scrollToPosition(adapter.itemCount - 1)
             }
-//            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-//                recycler_view_list.scrollToPosition(0)
-//            }
-//            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
-//                recycler_view_list.scrollToPosition(0)
-//            }
         })
-
+        binding.chat.scrollToPosition(adapter.itemCount - 1)
         return binding.root
     }
 }

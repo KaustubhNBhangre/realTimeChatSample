@@ -14,9 +14,6 @@ class HomeViewModel(private val userName: String) : ViewModel(), GetUser {
     private val userModel = UserModel()
     private val messageModel = MessageModel()
 
-    private lateinit var toObj:User;
-
-
     private val _eventNavToUserList = MutableLiveData<Boolean>()
     val eventNavToUserList: LiveData<Boolean>
         get() = _eventNavToUserList
@@ -103,7 +100,7 @@ class HomeViewModel(private val userName: String) : ViewModel(), GetUser {
                 msgLine += if (message.from == from) {
                     "You: "
                 } else {
-                    val tempArray=homeItems[index].displayName.split(" ")
+                    val tempArray = homeItems[index].displayName.split(" ")
                     tempArray[0] + ": "
                 }
 
@@ -116,8 +113,6 @@ class HomeViewModel(private val userName: String) : ViewModel(), GetUser {
             }
         }
     }
-
-
 
 
 }
