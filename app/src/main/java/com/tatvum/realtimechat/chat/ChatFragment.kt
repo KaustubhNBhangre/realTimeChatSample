@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.tatvum.realtimechat.PREF_NAME
 import com.tatvum.realtimechat.R
 import com.tatvum.realtimechat.databinding.ChatBinding
@@ -42,6 +43,7 @@ class ChatFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.chat.adapter = adapter
+//        binding.chat.smoothScrollToPosition(adapter.itemCount - 1)
 
         viewModel.chatList.observe(this, Observer { chatList ->
             if (chatList != null) {
@@ -52,14 +54,35 @@ class ChatFragment : Fragment() {
 
         viewModel.eventSendMessage.observe(this, Observer { status ->
             if (status) {
-                viewModel.getAllChats()
+                binding.chat.scrollToPosition(adapter.itemCount - 1)
                 viewModel.messageSent()
             }
         })
 
         val linearLayoutManager = LinearLayoutManager(activity)
-        linearLayoutManager.stackFromEnd = true;
-        binding.chat.layoutManager = linearLayoutManager;
+        binding.chat.layoutManager = linearLayoutManager
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+//            override fun onChanged() {
+//                binding.chat.scrollToPosition(adapter.itemCount - 1)
+//            }
+
+            //            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+//                recycler_view_list.scrollToPosition(0)
+//            }
+//            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+//                recycler_view_list.scrollToPosition(0)
+//            }
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                binding.chat.scrollToPosition(adapter.itemCount - 1)
+            }
+//            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+//                recycler_view_list.scrollToPosition(0)
+//            }
+//            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
+//                recycler_view_list.scrollToPosition(0)
+//            }
+        })
 
         return binding.root
     }

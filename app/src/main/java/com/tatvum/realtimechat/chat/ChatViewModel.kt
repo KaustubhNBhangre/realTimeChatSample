@@ -81,7 +81,7 @@ class ChatViewModel(private val fromValue: String, private val toValue: String) 
 
     override fun getUser(user: User?, id: String) {
         toObj = user
-        messageModel.getMessageList(fromValue, toValue, this)
+        messageModel.getMessageRealtime(fromValue, toValue, this)
     }
 
     override fun getMessages(messageList: List<Message>?) {

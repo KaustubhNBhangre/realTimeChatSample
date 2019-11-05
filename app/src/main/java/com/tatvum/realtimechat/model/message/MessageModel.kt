@@ -10,6 +10,7 @@ import com.tatvum.realtimechat.model.message.listeners.GetMessage
 import timber.log.Timber
 
 const val TIME_STAMP_FIELD = "timeStamp"
+const val QUERY_LIMIT:Long = 100
 
 class MessageModel {
     private var database: FirebaseFirestore = Model.getInstance()
@@ -55,6 +56,25 @@ class MessageModel {
                 getAllMessages.getMessages(messageList)
             }
             .addOnFailureListener { getAllMessages.getMessages(null) }
+    }
+
+    fun getMessageRealtime(from: String, to: String, getAllMessages: GetAllMessages) {
+        val messageList = mutableListOf<Message>()
+        val collectionName = getCollectionName(from, to)
+        database.collection(collectionName).orderBy(TIME_STAMP_FIELD, Query.Direction.ASCENDING)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    getAllMessages.getMessages(null)
+                } else {
+                    if (snapshot != null) {
+                        for (documentChange in snapshot.documentChanges) {
+                            val message: Message = documentChange.document.toObject(Message::class.java)
+                            messageList.add(message)
+                        }
+                        getAllMessages.getMessages(messageList)
+                    }
+                }
+            }
     }
 
     fun getLastMessage(from: String, to: String, getMessage: GetMessage) {
